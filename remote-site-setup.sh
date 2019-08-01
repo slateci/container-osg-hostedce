@@ -4,7 +4,7 @@ set -u
 stat osg-wn-client
 if [[ $? -ne 0 ]]; then
   echo "No WN client found. Assuming setup.."
-  which wget
+  which curl
   if [[ $? -eq 0 ]]; then
     curl -O http://repo.opensciencegrid.org/tarball-install/3.4/osg-wn-client-latest.el7.x86_64.tar.gz
   else
