@@ -13,6 +13,17 @@ echo "Keyscanning.."
 mkdir -p ~/.ssh
 ssh-keyscan -H $(echo $ENDPOINT | cut -d'@' -f2) >> ~/.ssh/known_hosts
 
+echo "Trying to populate hostname in 99-local.ini with a better value.."
+pushd /etc/osg/config.d
+  if [[ -z "$_CONDOR_NETWORK_HOSTNAME" ]]; then
+    echo '$_CONDOR_NETWORK_HOSTNAME is empty, just using `hostname`'
+    sed -i "s/localhost/$(hostname)/" 99-local.ini
+  else
+    echo '$_CONDOR_NETWORK_HOSTNAME is nonempty, substituting it in..'
+    sed -i "s/localhost/$_CONDOR_NETWORK_HOSTNAME/" 99-local.ini
+  fi
+popd 
+
 echo "Running OSG configure.."
 # Run the OSG Configure script to set up bosco
 osg-configure -c
