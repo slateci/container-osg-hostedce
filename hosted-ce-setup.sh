@@ -2,7 +2,7 @@
 
 #kubernetes configmaps arent writeable
 stat /tmp/99-local.ini
-if [ $? -eq 0]; then
+if [[ $? -eq 0 ]]; then
   cp /tmp/99-local.ini /etc/osg/config.d/99-local.ini
 fi
 
