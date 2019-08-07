@@ -46,6 +46,10 @@ certbot certonly -n --agree-tos --standalone --email $CE_CONTACT -d $CE_HOSTNAME
 ln -s /etc/letsencrypt/live/$CE_HOSTNAME/cert.pem /etc/grid-security/hostcert.pem
 ln -s /etc/letsencrypt/live/$CE_HOSTNAME/privkey.pem /etc/grid-security/hostkey.pem
 
+echo ">>>>> YOUR CERTIFICATE INFORMATION IS:"
+openssl x509 -in /etc/letsencrypt/live/$CE_HOSTNAME/cert.pem -noout -text
+echo "><><><><><><><><><><><><><><><><><><><"
+
 echo "Copying local submit attributes file if it exists.."
 if [[ -z "$LOCAL_ATTRIBUTES_FILE" ]]; then
   echo "No local submit attributes found"
