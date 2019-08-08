@@ -18,7 +18,7 @@ if [[ $? -ne 0 ]]; then
   source ~/osg-wn-client/setup.sh
   osg-ca-manage setupCA --url osg
 
-  echo -e "#!/bin/bash \n source /home/osg/osg-wn-client/setup.sh \n osg-ca-manage refreshCA \n osg-ca-manage fetchCRL" > update_certs.sh
+  echo -e "#!/bin/bash \n source $HOME/osg-wn-client/setup.sh \n osg-ca-manage refreshCA \n osg-ca-manage fetchCRL" > update_certs.sh
   echo "0 0 * * * $HOME/osg-wn-client/update_certs.sh" > update_certs.cron
   crontab update_certs.cron
 
