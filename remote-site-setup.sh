@@ -19,7 +19,7 @@ if [[ $? -ne 0 ]]; then
   osg-ca-manage setupCA --url osg
 
   echo -e "#!/bin/bash \n source $HOME/osg-wn-client/setup.sh \n osg-ca-manage refreshCA \n osg-ca-manage fetchCRL" > update_certs.sh
-  echo "0 0 * * * $HOME/osg-wn-client/update_certs.sh" > update_certs.cron
+  echo "0 0 * * * $HOME/osg-wn-client/update_certs.sh >> $HOME/update_certs.log" > update_certs.cron
   chmod 755 $HOME/osg-wn-client/update_certs.sh
   crontab update_certs.cron
 
