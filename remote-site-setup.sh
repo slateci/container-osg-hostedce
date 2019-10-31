@@ -27,3 +27,6 @@ if [[ $? -ne 0 ]]; then
 
 fi
 
+# Do some SED that will push the contents of $slurm_binpath to the correct scripts on remote side
+# At this time bosco/glite/bin/slurm_submit.sh bosco/glite/bin/slurm_cancel.sh
+# bosco/glite/libexec/slurm_submit.sh bosco/glite/libexec/slurm_cancel.sh
