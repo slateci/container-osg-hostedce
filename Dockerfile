@@ -9,6 +9,8 @@ COPY hosted-ce-setup.sh /etc/osg/image-config.d/hosted-ce-setup.sh
 #COPY hosted-ce.conf /etc/supervisord.d/hosted-ce.conf
 COPY remote-site-setup.sh /etc/osg/remote-site-setup.sh
 
+COPY install-resource.sh /etc/osg/install-resource.sh
+
 # can be dropped when provided by upstream htcondor-ce packaging
 COPY 51-gratia.conf /usr/share/condor-ce/config.d/51-gratia.conf
 
