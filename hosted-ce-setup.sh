@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# do custom site resource setup
-bash /etc/osg/install-resource.sh
+#kubernetes configmaps arent writeable
+stat /tmp/99-local.ini
+if [[ $? -eq 0 ]]; then
+  cp /tmp/99-local.ini /etc/osg/config.d/99-local.ini
+fi
 
 # need to programmatically get users
 for user in $(echo $CE_USERS | tr ',' ' '); do
