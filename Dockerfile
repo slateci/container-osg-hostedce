@@ -8,6 +8,9 @@ COPY hosted-ce-setup.sh /etc/osg/image-config.d/hosted-ce-setup.sh
 #COPY hosted-ce.conf /etc/supervisord.d/hosted-ce.conf
 COPY remote-site-setup.sh /etc/osg/remote-site-setup.sh
 
+# can be dropped when provided by upstream htcondor-ce packaging
+COPY 51-gratia.conf /usr/share/condor-ce/config.d/51-gratia.conf
+
 # do the bad thing of overwriting the existing cron job for fetch-crl
 ADD fetch-crl /etc/cron.d/fetch-crl
 
