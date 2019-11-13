@@ -14,5 +14,7 @@ COPY 51-gratia.conf /usr/share/condor-ce/config.d/51-gratia.conf
 # do the bad thing of overwriting the existing cron job for fetch-crl
 ADD fetch-crl /etc/cron.d/fetch-crl
 
+# Add a comment so that docker hub rebuilds this :)
+
 #ENTRYPOINT ["osg-configure","-c"]
 ENTRYPOINT ["/usr/local/sbin/supervisord_startup.sh"]
