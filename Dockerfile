@@ -11,6 +11,9 @@ COPY remote-site-setup.sh /etc/osg/remote-site-setup.sh
 # can be dropped when provided by upstream htcondor-ce packaging
 COPY 51-gratia.conf /usr/share/condor-ce/config.d/51-gratia.conf
 
+RUN mkdir -p /etc/condor-ce/bosco_override
+
+# can be dropped when these are upstreamed to htcondor-ce
 COPY bosco-cluster-remote-hosts.sh /usr/local/bin/bosco-cluster-remote-hosts.sh
 COPY bosco-cluster-remote-hosts.py /usr/local/bin/bosco-cluster-remote-hosts.py
 
