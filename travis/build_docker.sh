@@ -9,7 +9,7 @@ for repo in $docker_repos; do
     docker build \
            -t $org/$repo:fresh \
            -t $org/$repo:$timestamp \
-           $repo
+           .
 done
 
 if [[ "${TRAVIS_PULL_REQUEST}" != "false" ]]; then
