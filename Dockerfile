@@ -2,7 +2,7 @@ FROM opensciencegrid/software-base:fresh
 LABEL maintainer "Lincoln Bryant <lincolnb@uchicago.edu>"
 
 RUN yum install -y yum-plugin-priorities && \
-yum install -y --enablerepo=devops-production hosted-ce-tools osg-ca-certs osg-ce-bosco fetch-crl \
+yum install -y --enablerepo=devops hosted-ce-tools osg-ca-certs osg-ce-bosco fetch-crl \
 gratia-probes-cron openssh openssh-clients certbot && yum clean all
 
 COPY hosted-ce-setup.sh /etc/osg/image-config.d/hosted-ce-setup.sh
