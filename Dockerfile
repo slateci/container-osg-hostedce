@@ -13,6 +13,13 @@ COPY 51-gratia.conf /usr/share/condor-ce/config.d/51-gratia.conf
 
 COPY 55-hostname.conf /etc/condor-ce/config.d/55-hostname.conf
 
+# can be dropped when provided by upstream htcondor-ce packaging
+RUN mkdir -p /etc/condor-ce/bosco_override
+
+# can be dropped when these are upstreamed to htcondor-ce
+COPY bosco-cluster-remote-hosts.sh /usr/local/bin/bosco-cluster-remote-hosts.sh
+COPY bosco-cluster-remote-hosts.py /usr/local/bin/bosco-cluster-remote-hosts.py
+
 # do the bad thing of overwriting the existing cron job for fetch-crl
 ADD fetch-crl /etc/cron.d/fetch-crl
 
