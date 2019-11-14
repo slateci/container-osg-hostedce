@@ -57,6 +57,3 @@ else
   echo "transferring $LOCAL_ATTRIBUTES_FILE to remote side.."
   scp -i /etc/osg/bosco.key $LOCAL_ATTRIBUTES_FILE $ENDPOINT:"~/bosco/glite/bin/$LOCAL_ATTRIBUTES_FILE"
 fi
-
-# now we do the bad thing beacuse it's a forking process and that makes supervisord sad
-/usr/share/condor-ce/condor_ce_startup
