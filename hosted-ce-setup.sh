@@ -50,6 +50,8 @@ echo ">>>>> YOUR CERTIFICATE INFORMATION IS:"
 openssl x509 -in /etc/letsencrypt/live/$CE_HOSTNAME/cert.pem -noout -text
 echo "><><><><><><><><><><><><><><><><><><><"
 
+/usr/local/bin/bosco-cluster-remote-hosts.sh
+
 echo "Copying local submit attributes file if it exists.."
 if [[ -z "$LOCAL_ATTRIBUTES_FILE" ]]; then
   echo "No local submit attributes found"
