@@ -21,6 +21,9 @@ COPY bosco-cluster-remote-hosts.py /usr/local/bin/bosco-cluster-remote-hosts.py
 # do the bad thing of overwriting the existing cron job for fetch-crl
 ADD fetch-crl /etc/cron.d/fetch-crl
 
+# Include script to drain the CE and upload accounting data to prepare for container teardown
+COPY drain-ce.sh /usr/local/bin/
+
 # Manage HTCondor-CE with supervisor
 COPY 10-htcondor-ce.conf /etc/supervisord.d/
 
