@@ -3,9 +3,9 @@
 # Condor needs to know the annoying randomly generated kubernetes pod hostname
 export GARBAGE_HOSTNAME=$(hostname -f)
 echo "SUPERUSERS = \$(SUPERUSERS), condor@daemon.htcondor.org/$GARBAGE_HOSTNAME, root@daemon.htcondor.org/$GARBAGE_HOSTNAME" \
->> /etc/condor-ce/99-hostname.conf
+>> /etc/condor-ce/config.d/99-hostname.conf
 echo "FRIENDLY_DAEMONS = \$(FRIENDLY_DAEMONS), condor@daemon.htcondor.org/$GARBAGE_HOSTNAME condor@child/$GARBAGE_HOSTNAME" \
->> /etc/condor-ce/99-hostname.conf 
+>> /etc/condor-ce/config.d/99-hostname.conf 
 
 #kubernetes configmaps arent writeable
 stat /tmp/99-local.ini
