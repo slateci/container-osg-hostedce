@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Condor needs to know the annoying randomly generated kubernetes pod hostname
+export GARBAGE_HOSTNAME=$(hostname -f)
+
 #kubernetes configmaps arent writeable
 stat /tmp/99-local.ini
 if [[ $? -eq 0 ]]; then
