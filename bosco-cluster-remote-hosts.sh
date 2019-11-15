@@ -1,9 +1,12 @@
 #!/bin/bash
 
-# Source condor-ce environment
-[ -f /usr/share/condor-ce/condor_ce_env_bootstrap ] &&
-   . /usr/share/condor-ce/condor_ce_env_bootstrap
+. foreach_bosco_endpoint.sh
 
-export OVERRIDE_DIR=/etc/condor-ce/bosco_override
-/usr/local/bin/bosco-cluster-remote-hosts.py
+OVERRIDE_DIR=/etc/condor-ce/bosco_override
+
+setup_bosco_cluster () {
+  bosco_cluster -o "$OVERRIDE_DIR" -a "${ruser}@${rhost}" "$batch"
+}
+
+foreach_bosco_endpoint setup_bosco_cluster
 
