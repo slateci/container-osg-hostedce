@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. foreach_bosco_endpoint.sh
+. /usr/local/bin/foreach_bosco_endpoint.sh
 
 OVERRIDE_DIR=/etc/condor-ce/bosco_override
 
