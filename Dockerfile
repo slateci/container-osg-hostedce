@@ -1,8 +1,10 @@
 FROM opensciencegrid/software-base:fresh
 LABEL maintainer "OSG Software <help@opensciencegrid.org>"
 
-RUN yum install -y yum-plugin-priorities
-RUN yum install -y osg-ca-certs osg-ce-bosco fetch-crl gratia-probes-cron openssh openssh-clients certbot
+RUN yum install -y osg-ce-bosco \
+                   openssh \
+                   openssh-clients \
+                   certbot
 
 COPY hosted-ce-setup.sh /etc/osg/image-config.d/hosted-ce-setup.sh
 #COPY hosted-ce.conf /etc/supervisord.d/hosted-ce.conf
