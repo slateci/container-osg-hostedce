@@ -46,15 +46,22 @@ echo "Copying setup script to remote side.."
 scp -i /etc/osg/bosco.key /etc/osg/remote-site-setup.sh $ENDPOINT:"~/remote-site-setup.sh"
 ssh -i /etc/osg/bosco.key $ENDPOINT sh remote-site-setup.sh
 
-echo "Establishing Let's Encrypt certificate.."
 # Cert stuff
-# this needs to be automated for renewal
-certbot certonly -n --agree-tos --standalone --email $CE_CONTACT -d $CE_HOSTNAME 
-ln -s /etc/letsencrypt/live/$CE_HOSTNAME/cert.pem /etc/grid-security/hostcert.pem
-ln -s /etc/letsencrypt/live/$CE_HOSTNAME/privkey.pem /etc/grid-security/hostkey.pem
+if [ "$DEVELOPER" == 'true' ]; then
+    echo "Establishing OSG Test certificate.."
+    # don't do this in the image to make it smaller for prod use
+    yum install -y --enablerepo=devops-itb osg-ca-generator
+    osg-ca-generator --host --vo osgtest
+else
+    echo "Establishing Let's Encrypt certificate.."
+    # this needs to be automated for renewal
+    certbot certonly -n --agree-tos --standalone --email $CE_CONTACT -d $CE_HOSTNAME
+    ln -s /etc/letsencrypt/live/$CE_HOSTNAME/cert.pem /etc/grid-security/hostcert.pem
+    ln -s /etc/letsencrypt/live/$CE_HOSTNAME/privkey.pem /etc/grid-security/hostkey.pem
+fi
 
 echo ">>>>> YOUR CERTIFICATE INFORMATION IS:"
-openssl x509 -in /etc/letsencrypt/live/$CE_HOSTNAME/cert.pem -noout -text
+openssl x509 -in /etc/grid-security/hostcert.pem -noout -text
 echo "><><><><><><><><><><><><><><><><><><><"
 
 /usr/local/bin/bosco-cluster-remote-hosts.sh
