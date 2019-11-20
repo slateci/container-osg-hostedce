@@ -1,5 +1,5 @@
 FROM opensciencegrid/software-base:fresh
-LABEL maintainer "Lincoln Bryant <lincolnb@uchicago.edu>"
+LABEL maintainer "OSG Software <help@opensciencegrid.org>"
 
 RUN yum install -y yum-plugin-priorities
 RUN yum install -y osg-ca-certs osg-ce-bosco fetch-crl gratia-probes-cron openssh openssh-clients certbot
