@@ -8,10 +8,9 @@ RUN yum install -y osg-ce-bosco \
     yum clean all --enablerepo=* && rm -rf /var/cache/yum/
 
 COPY hosted-ce-setup.sh /etc/osg/image-config.d/hosted-ce-setup.sh
-#COPY hosted-ce.conf /etc/supervisord.d/hosted-ce.conf
 COPY remote-site-setup.sh /etc/osg/remote-site-setup.sh
 
-# can be dropped when provided by upstream htcondor-ce packaging
+# can be dropped when provided by upstream osg-ce packaging
 COPY 51-gratia.conf /usr/share/condor-ce/config.d/51-gratia.conf
 
 # can be dropped when provided by upstream htcondor-ce packaging
@@ -30,5 +29,4 @@ COPY drain-ce.sh /usr/local/bin/
 # Manage HTCondor-CE with supervisor
 COPY 10-htcondor-ce.conf /etc/supervisord.d/
 
-#ENTRYPOINT ["osg-configure","-c"]
 ENTRYPOINT ["/usr/local/sbin/supervisord_startup.sh"]
