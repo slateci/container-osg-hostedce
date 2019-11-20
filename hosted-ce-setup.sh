@@ -52,16 +52,21 @@ if [ "$DEVELOPER" == 'true' ]; then
     # don't do this in the image to make it smaller for prod use
     yum install -y --enablerepo=devops-itb osg-ca-generator
     osg-ca-generator --host --vo osgtest
-else
+fi
+
+hostcert_path=/etc/grid-security/hostcert.pem
+hostkey_path=/etc/grid-security/hostkey.pem
+
+if [ ! -f $hostcert_path ] && [ ! -f $hostkey_path ]; then
     echo "Establishing Let's Encrypt certificate.."
     # this needs to be automated for renewal
     certbot certonly -n --agree-tos --standalone --email $CE_CONTACT -d $CE_HOSTNAME
-    ln -s /etc/letsencrypt/live/$CE_HOSTNAME/cert.pem /etc/grid-security/hostcert.pem
-    ln -s /etc/letsencrypt/live/$CE_HOSTNAME/privkey.pem /etc/grid-security/hostkey.pem
+    ln -s /etc/letsencrypt/live/$CE_HOSTNAME/cert.pem $hostcert_path
+    ln -s /etc/letsencrypt/live/$CE_HOSTNAME/privkey.pem $hostkey_path
 fi
 
 echo ">>>>> YOUR CERTIFICATE INFORMATION IS:"
-openssl x509 -in /etc/grid-security/hostcert.pem -noout -text
+openssl x509 -in $hostcert_path -noout -text
 echo "><><><><><><><><><><><><><><><><><><><"
 
 /usr/local/bin/bosco-cluster-remote-hosts.sh
