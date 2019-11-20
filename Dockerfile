@@ -2,7 +2,6 @@ FROM opensciencegrid/software-base:fresh
 LABEL maintainer "OSG Software <help@opensciencegrid.org>"
 
 RUN yum install -y osg-ce-bosco \
-                   openssh \
                    openssh-clients \
                    certbot && \
     rm -rf /var/cache/yum/
