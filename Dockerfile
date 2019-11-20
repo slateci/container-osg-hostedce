@@ -4,7 +4,8 @@ LABEL maintainer "OSG Software <help@opensciencegrid.org>"
 RUN yum install -y osg-ce-bosco \
                    openssh \
                    openssh-clients \
-                   certbot
+                   certbot && \
+    yum clean all --enablerepo=* && rm -rf /var/cache/yum/
 
 COPY hosted-ce-setup.sh /etc/osg/image-config.d/hosted-ce-setup.sh
 #COPY hosted-ce.conf /etc/supervisord.d/hosted-ce.conf
