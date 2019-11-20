@@ -47,7 +47,7 @@ scp -i /etc/osg/bosco.key /etc/osg/remote-site-setup.sh $ENDPOINT:"~/remote-site
 ssh -i /etc/osg/bosco.key $ENDPOINT sh remote-site-setup.sh
 
 # Cert stuff
-if [ "$DEVELOPER" == 'true' ]; then
+if [ "${DEVELOPER,,}" == 'true' ]; then
     echo "Establishing OSG Test certificate.."
     # don't do this in the image to make it smaller for prod use
     yum install -y --enablerepo=devops-itb osg-ca-generator
