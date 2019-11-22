@@ -37,7 +37,7 @@ setup_ssh_config () {
 
   # add host SSH config
   ssh_config=$ssh_dir/config
-  if ! grep -q "^Host ${rhost}$ $ssh_config"; then
+  if ! grep -q "^Host ${rhost}$" $ssh_config; then
       cat <<EOF >> $ssh_config
 Host ${rhost}
 IdentityFile ${ssh_key}
