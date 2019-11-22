@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. /usr/local/bin/foreach_bosco_endpoint.sh
+
 # Condor needs to know the annoying randomly generated kubernetes pod hostname
 export GARBAGE_HOSTNAME=$(hostname -f)
 echo "SUPERUSERS = \$(SUPERUSERS), condor@daemon.htcondor.org/$GARBAGE_HOSTNAME, root@daemon.htcondor.org/$GARBAGE_HOSTNAME" \
@@ -13,18 +15,38 @@ if [[ $? -eq 0 ]]; then
   cp /tmp/99-local.ini /etc/osg/config.d/99-local.ini
 fi
 
-# need to programmatically get users
-for user in $(echo $CE_USERS | tr ',' ' '); do
-  echo "Adding user $user"
-  adduser $user 
-  mkdir -p /home/$user/.ssh
-  chown $user: /home/$user/.ssh
-  ssh-keyscan -H $(echo $ENDPOINT | cut -d'@' -f2) >> /home/$user/.ssh/known_hosts
-done
+setup_ssh_config () {
+  echo "Adding user ${ruser}"
+  ssh_dir="/home/${ruser}/.ssh"
+  if ! getent passwd "${ruser}" > /dev/null 2>&1; then
+     # setup user and SSH dir
+     adduser --base-dir /home/ "${ruser}"
+     mkdir -p $ssh_dir
+     chown "${ruser}": $ssh_dir
+     chmod 700 $ssh_dir
 
-echo "Keyscanning.."
-mkdir -p ~/.ssh
-ssh-keyscan -H $(echo $ENDPOINT | cut -d'@' -f2) >> ~/.ssh/known_hosts
+     # copy Bosco key
+     ssh_key=$ssh_dir/bosco.key
+     cp /etc/osg/bosco.key $ssh_key
+     chmod 600 $ssh_key
+     chown "${ruser}": $ssh_key
+  fi
+
+  # setup known hosts
+  ssh-keyscan -H "${rhost}" >> $ssh_dir/known_hosts
+
+  # add host SSH config
+  ssh_config=$ssh_dir/config
+  if ! grep -q "^Host ${rhost}$" $ssh_config; then
+      cat <<EOF >> $ssh_config
+Host ${rhost}
+IdentityFile ${ssh_key}
+
+EOF
+  fi
+}
+
+foreach_bosco_endpoint setup_ssh_config
 
 echo "Trying to populate hostname in 99-local.ini with a better value.."
 pushd /etc/osg/config.d
