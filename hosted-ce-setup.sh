@@ -40,8 +40,7 @@ setup_ssh_config () {
   if ! grep -q "^Host ${rhost}$ $ssh_config"; then
       cat <<EOF >> $ssh_config
 Host ${rhost}
-Hostname ${rhost}
-IdentiyFile ${ssh_key}
+IdentityFile ${ssh_key}
 
 EOF
   fi
