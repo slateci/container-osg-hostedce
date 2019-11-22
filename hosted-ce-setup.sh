@@ -17,10 +17,10 @@ fi
 
 setup_ssh_config () {
   echo "Adding user ${ruser}"
-  ssh_dir="~${ruser}/.ssh"
+  ssh_dir="/home/${ruser}/.ssh"
   if ! getent passwd "${ruser}" > /dev/null 2>&1; then
-      # setup user and SSH dir
-     adduser "${ruser}"
+     # setup user and SSH dir
+     adduser --base-dir /home/ "${ruser}"
      mkdir -p $ssh_dir
      chown "${ruser}": $ssh_dir
      chmod 700 $ssh_dir
