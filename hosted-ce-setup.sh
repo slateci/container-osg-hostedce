@@ -18,7 +18,7 @@ fi
 setup_ssh_config () {
   echo "Adding user ${ruser}"
   ssh_dir="~${ruser}/.ssh"
-  if [[ $(getent passwd "${ruser}" -ne 0) ]]; then
+  if ! getent passwd "${ruser}" > /dev/null 2>&1; then
       # setup user and SSH dir
      adduser "${ruser}"
      mkdir -p $ssh_dir
@@ -37,7 +37,7 @@ setup_ssh_config () {
 
   # add host SSH config
   ssh_config=$ssh_dir/config
-  if [[ -z $(grep "^Host ${rhost}$ $ssh_config") ]]; then
+  if ! grep -q "^Host ${rhost}$ $ssh_config"; then
       cat <<EOF >> $ssh_config
 Host ${rhost}
 Hostname ${rhost}
