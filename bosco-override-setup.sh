@@ -11,7 +11,7 @@
 #     ...
 
 function errexit {
-    echo "$1"
+    echo "$1" >&2
     exit 1
 }
 
@@ -26,5 +26,5 @@ OVERRIDE_DIR=/etc/condor-ce/bosco_override/
 git clone --depth=1 $GIT_ENDPOINT $REPO_DIR
 
 RESOURCE_DIR="$REPO_DIR/$RESOURCE_NAME/"
-[ -d $RESOURCE_DIR ] || errexit "Could not find $RESOURCE_NAME/ under $GIT_ENDPOINT"
+[[ -d $RESOURCE_DIR ]] || errexit "Could not find $RESOURCE_NAME/ under $GIT_ENDPOINT"
 rsync -az "$REPO_DIR/$RESOURCE_NAME"  $OVERRIDE_DIR
