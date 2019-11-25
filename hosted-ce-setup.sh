@@ -28,11 +28,6 @@ echo "Running OSG configure.."
 # Run the OSG Configure script to set up bosco
 osg-configure -c
 
-echo "Copying setup script to remote side.."
-# Run some additional adjustments as per Marco's doc
-scp -i /etc/osg/bosco.key /etc/osg/remote-site-setup.sh $ENDPOINT:"~/remote-site-setup.sh"
-ssh -i /etc/osg/bosco.key $ENDPOINT sh remote-site-setup.sh
-
 # Cert stuff
 if [ "${DEVELOPER,,}" == 'true' ]; then
     echo "Establishing OSG Test certificate.."
