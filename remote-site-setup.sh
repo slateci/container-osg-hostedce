@@ -1,6 +1,41 @@
 #!/bin/bash
 set -u
 
+. /usr/local/bin/foreach_bosco_endpoint.sh
+
+setup_ssh_config () {
+  echo "Adding user ${ruser}"
+  ssh_dir="/home/${ruser}/.ssh"
+  if ! getent passwd "${ruser}" > /dev/null 2>&1; then
+     # setup user and SSH dir
+     adduser --base-dir /home/ "${ruser}"
+     mkdir -p $ssh_dir
+     chown "${ruser}": $ssh_dir
+     chmod 700 $ssh_dir
+
+     # copy Bosco key
+     ssh_key=$ssh_dir/bosco.key
+     cp /etc/osg/bosco.key $ssh_key
+     chmod 600 $ssh_key
+     chown "${ruser}": $ssh_key
+  fi
+
+  # setup known hosts
+  ssh-keyscan -H "${rhost}" >> $ssh_dir/known_hosts
+
+  # add host SSH config
+  ssh_config=$ssh_dir/config
+  if ! grep -q "^Host ${rhost}$" $ssh_config; then
+      cat <<EOF >> $ssh_config
+Host ${rhost}
+IdentityFile ${ssh_key}
+
+EOF
+  fi
+}
+
+foreach_bosco_endpoint setup_ssh_config
+
 stat osg-wn-client
 if [[ $? -ne 0 ]]; then
   echo "No WN client found. Assuming setup.."
@@ -27,3 +62,4 @@ if [[ $? -ne 0 ]]; then
 
 fi
 
+/usr/local/bin/bosco-cluster-remote-hosts.sh
