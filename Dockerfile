@@ -7,8 +7,8 @@ RUN yum install -y osg-ce-bosco \
                    certbot && \
     rm -rf /var/cache/yum/
 
-COPY hosted-ce-setup.sh /etc/osg/image-config.d/hosted-ce-setup.sh
-COPY remote-site-setup.sh /etc/osg/remote-site-setup.sh
+COPY 25-hosted-ce-setup.sh /etc/osg/image-config.d/
+COPY 30-remote-site-setup.sh /etc/osg/image-config.d/
 
 # can be dropped when provided by upstream osg-ce packaging
 COPY 51-gratia.conf /usr/share/condor-ce/config.d/51-gratia.conf
