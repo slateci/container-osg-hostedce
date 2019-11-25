@@ -3,6 +3,7 @@ set -u
 
 . /usr/local/bin/foreach_bosco_endpoint.sh
 
+BOSCO_KEY=/etc/osg/bosco.key
 setup_ssh_config () {
   echo "Adding user ${ruser}"
   ssh_dir="/home/${ruser}/.ssh"
@@ -15,7 +16,7 @@ setup_ssh_config () {
 
      # copy Bosco key
      ssh_key=$ssh_dir/bosco.key
-     cp /etc/osg/bosco.key $ssh_key
+     cp $BOSCO_KEY $ssh_key
      chmod 600 $ssh_key
      chown "${ruser}": $ssh_key
   fi
@@ -36,31 +37,27 @@ EOF
 
 foreach_bosco_endpoint setup_ssh_config
 
-stat osg-wn-client
-if [[ $? -ne 0 ]]; then
-  echo "No WN client found. Assuming setup.."
-  which curl
-  if [[ $? -eq 0 ]]; then
-    curl -O http://repo.opensciencegrid.org/tarball-install/3.4/osg-wn-client-latest.el7.x86_64.tar.gz
-  else
-    wget http://repo.opensciencegrid.org/tarball-install/3.4/osg-wn-client-latest.el7.x86_64.tar.gz
-  fi
+# Install the WN client, CAs, and CRLs on the remote host
+# Store logs in /var/log/condor-ce/ to simplify serving logs via Kubernetes
+ENDPOINT_CONFIG=/etc/endpoints.ini
+setup_endpoints_ini () {
+    remote_home_dir=$(ssh -i $BOSCO_KEY ${ruser}@${rhost} pwd)
+    cat <<EOF >> $ENDPOINT_CONFIG
+[Endpoint ${RESOURCE_NAME}-${ruser}]
+local_user = ${ruser}
+remote_host = ${rhost}
+remote_user = ${ruser}
+remote_dir = $remote_home_dir/bosco-osg-wn-client
+ssh_key = ${BOSCO_KEY}
+EOF
+}
 
-  echo "Extracting WN Client"
-  tar -xvzf osg-wn-client-latest.el7.x86_64.tar.gz
-  pushd osg-wn-client
-  ./osg/osg-post-install
-  source ~/osg-wn-client/setup.sh
-  osg-ca-manage setupCA --url osg
-
-  echo -e "#!/bin/bash \n source $HOME/osg-wn-client/setup.sh \n osg-ca-manage refreshCA \n osg-ca-manage fetchCRL" > update_certs.sh
-  echo "0 0 * * * $HOME/osg-wn-client/update_certs.sh &>> $HOME/update_certs.log" > update_certs.cron
-  chmod 755 $HOME/osg-wn-client/update_certs.sh
-  crontab update_certs.cron
-
-  popd
-
-fi
+cat <<EOF > $ENDPOINT_CONFIG
+[DEFAULT]
+upstream_url = https://repo.opensciencegrid.org/tarball-install/3.4/osg-wn-client-latest.${REMOTE_OS_VER}.x86_64.tar.gz
+EOF
+foreach_bosco_endpoint setup_endpoints_ini
+update-all-remote-wn-clients --log-dir /var/log/condor-ce/
 
 # Populate the bosco override dir from a Git repo
 GIT_SSH_KEY=/etc/osg/git.key
