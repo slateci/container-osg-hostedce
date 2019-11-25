@@ -62,4 +62,11 @@ if [[ $? -ne 0 ]]; then
 
 fi
 
+# Populate the bosco override dir from a Git repo
+GIT_SSH_KEY=/etc/osg/git.key
+[[ -f $GIT_SSH_KEY ]] && GIT_SSH_COMMAND='ssh -i $GIT_SSH_KEY'
+[[ -z $BOSCO_GIT_ENDPOINT ]] || \
+    /usr/local/bin/bosco-override-setup.sh "$BOSCO_GIT_ENDPOINT" "$BOSCO_DIRECTORY"
+unset GIT_SSH_COMMAND
+
 /usr/local/bin/bosco-cluster-remote-hosts.sh

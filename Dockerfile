@@ -2,6 +2,7 @@ FROM opensciencegrid/software-base:fresh
 LABEL maintainer "OSG Software <help@opensciencegrid.org>"
 
 RUN yum install -y osg-ce-bosco \
+                   git \
                    openssh-clients \
                    certbot && \
     rm -rf /var/cache/yum/
@@ -24,6 +25,17 @@ ADD fetch-crl /etc/cron.d/fetch-crl
 
 # Include script to drain the CE and upload accounting data to prepare for container teardown
 COPY drain-ce.sh /usr/local/bin/
+
+# Set up Bosco override dir from Git repo (SOFTWARE-3903)
+# Expects a Git repo with the following directory structure:
+#     RESOURCE_NAME_1/
+#         bosco_override/
+#         ...
+#     RESOURCE_NAME_2/
+#         bosco_override/
+#         ...
+#     ...
+COPY bosco-override-setup.sh /usr/local/bin
 
 # Manage HTCondor-CE with supervisor
 COPY 10-htcondor-ce.conf /etc/supervisord.d/
