@@ -43,11 +43,3 @@ fi
 echo ">>>>> YOUR CERTIFICATE INFORMATION IS:"
 openssl x509 -in $hostcert_path -noout -text
 echo "><><><><><><><><><><><><><><><><><><><"
-
-echo "Copying local submit attributes file if it exists.."
-if [[ -z "$LOCAL_ATTRIBUTES_FILE" ]]; then
-  echo "No local submit attributes found"
-else
-  echo "transferring $LOCAL_ATTRIBUTES_FILE to remote side.."
-  scp -i /etc/osg/bosco.key $LOCAL_ATTRIBUTES_FILE $ENDPOINT:"~/bosco/glite/bin/$LOCAL_ATTRIBUTES_FILE"
-fi
