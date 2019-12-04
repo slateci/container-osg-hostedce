@@ -1,5 +1,4 @@
 #!/bin/bash
-set -u
 
 . /usr/local/bin/foreach_bosco_endpoint.sh
 
