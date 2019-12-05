@@ -1,5 +1,4 @@
 #!/bin/bash
-set -u
 
 . /usr/local/bin/foreach_bosco_endpoint.sh
 
@@ -62,7 +61,7 @@ update-all-remote-wn-clients --log-dir /var/log/condor-ce/
 # Populate the bosco override dir from a Git repo
 GIT_SSH_KEY=/etc/osg/git.key
 [[ -f $GIT_SSH_KEY ]] && export GIT_SSH_COMMAND="ssh -i $GIT_SSH_KEY"
-[[ -z $BOSCO_GIT_ENDPOINT ]] || \
+[[ -z $BOSCO_GIT_ENDPOINT || -z $BOSCO_DIRECTORY ]] || \
     /usr/local/bin/bosco-override-setup.sh "$BOSCO_GIT_ENDPOINT" "$BOSCO_DIRECTORY"
 unset GIT_SSH_COMMAND
 
