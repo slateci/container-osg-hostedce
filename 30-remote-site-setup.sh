@@ -41,20 +41,18 @@ foreach_bosco_endpoint setup_ssh_config
 ENDPOINT_CONFIG=/etc/endpoints.ini
 setup_endpoints_ini () {
     remote_home_dir=$(ssh -i $BOSCO_KEY ${ruser}@${rhost} pwd)
+    remote_os_ver=$(ssh -i $BOSCO_KEY ${ruser}@${rhost} "rpm -E %rhel")
     cat <<EOF >> $ENDPOINT_CONFIG
 [Endpoint ${RESOURCE_NAME}-${ruser}]
 local_user = ${ruser}
 remote_host = ${rhost}
 remote_user = ${ruser}
 remote_dir = $remote_home_dir/bosco-osg-wn-client
+upstream_url = https://repo.opensciencegrid.org/tarball-install/3.4/osg-wn-client-latest.${remote_os_ver}.x86_64.tar.gz
 ssh_key = ${BOSCO_KEY}
 EOF
 }
 
-cat <<EOF > $ENDPOINT_CONFIG
-[DEFAULT]
-upstream_url = https://repo.opensciencegrid.org/tarball-install/3.4/osg-wn-client-latest.${REMOTE_OS_VER}.x86_64.tar.gz
-EOF
 foreach_bosco_endpoint setup_endpoints_ini
 update-all-remote-wn-clients --log-dir /var/log/condor-ce/
 
