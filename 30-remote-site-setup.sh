@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xe
 
 . /usr/local/bin/foreach_bosco_endpoint.sh
 

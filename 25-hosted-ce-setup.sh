@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xe
 
 #kubernetes configmaps arent writeable
 stat /tmp/99-local.ini
