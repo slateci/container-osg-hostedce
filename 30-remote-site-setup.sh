@@ -1,4 +1,6 @@
-#!/bin/bash -xe
+#!/bin/bash
+
+set -xe
 
 . /usr/local/bin/foreach_bosco_endpoint.sh
 
@@ -64,3 +66,5 @@ GIT_SSH_KEY=/etc/osg/git.key
 unset GIT_SSH_COMMAND
 
 /usr/local/bin/bosco-cluster-remote-hosts.sh
+
+set +xe

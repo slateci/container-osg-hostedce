@@ -1,4 +1,6 @@
-#!/bin/bash -xe
+#!/bin/bash
+
+set -xe
 
 #kubernetes configmaps arent writeable
 stat /tmp/99-local.ini
@@ -43,3 +45,5 @@ fi
 echo ">>>>> YOUR CERTIFICATE INFORMATION IS:"
 openssl x509 -in $hostcert_path -noout -text
 echo "><><><><><><><><><><><><><><><><><><><"
+
+set +xe
