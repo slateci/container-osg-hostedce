@@ -50,7 +50,7 @@ local_user = ${ruser}
 remote_host = ${rhost}
 remote_user = ${ruser}
 remote_dir = $remote_home_dir/bosco-osg-wn-client
-upstream_url = https://repo.opensciencegrid.org/tarball-install/3.4/osg-wn-client-latest.${remote_os_ver}.x86_64.tar.gz
+upstream_url = https://repo.opensciencegrid.org/tarball-install/3.4/osg-wn-client-latest.el${remote_os_ver}.x86_64.tar.gz
 ssh_key = ${BOSCO_KEY}
 EOF
 }
