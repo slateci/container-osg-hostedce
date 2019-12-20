@@ -5,6 +5,8 @@ RUN yum install -y --enablerepo=osg-minefield \
                    osg-ce-bosco \
                    git \
                    openssh-clients \
+                   sudo \
+                   wget \
                    certbot && \
     yum clean all && \
     rm -rf /var/cache/yum/
