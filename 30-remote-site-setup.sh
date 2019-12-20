@@ -28,7 +28,7 @@ setup_ssh_config () {
 
   # add SSH config
   ssh_config=$ssh_dir/config
-  if [ -f $ssh_config ]; then
+  if [ ! -f $ssh_config ]; then
       echo "IdentityFile ${ssh_key}" > $ssh_config
   fi
 }
