@@ -21,7 +21,10 @@ setup_ssh_config () {
   fi
 
   # setup known hosts
-  ssh-keyscan -H "${rhost}" >> $ssh_dir/known_hosts
+  REMOTE_HOST_KEY=`ssh-keyscan -H "${rhost}"`
+  for known_hosts in $ssh_dir/known_hosts /root/.ssh/known_hosts; do
+      echo $REMOTE_HOST_KEY >>  $known_hosts
+  done
 
   # add host SSH config
   ssh_config=$ssh_dir/config
