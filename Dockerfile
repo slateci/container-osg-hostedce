@@ -1,7 +1,8 @@
 FROM opensciencegrid/software-base:fresh
 LABEL maintainer "OSG Software <help@opensciencegrid.org>"
 
-RUN yum install -y osg-ce-bosco \
+RUN yum install -y --enablerepo=osg-minefield \
+                   osg-ce-bosco \
                    git \
                    openssh-clients \
                    certbot && \
