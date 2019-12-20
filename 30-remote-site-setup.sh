@@ -31,8 +31,8 @@ setup_ssh_config () {
 # Set the appropriate SSH key for bosco_cluster commands
 root_ssh_dir=/root/.ssh/
 mkdir -p $root_ssh_dir
-chown 700 $root_ssh_dir
-echo "IdentityFile ${BOSCO_KEY}" > $root_ssh_dir/.ssh/config
+chmod 700 $root_ssh_dir
+echo "IdentityFile ${BOSCO_KEY}" > $root_ssh_dir/config
 
 foreach_bosco_endpoint setup_ssh_config
 
