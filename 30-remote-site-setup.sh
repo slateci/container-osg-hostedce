@@ -18,7 +18,7 @@ setup_ssh_config () {
      cp $BOSCO_KEY $ssh_key
      chmod 600 $ssh_key
      chown "${ruser}": $ssh_key
-     echo "IdentityFile ${ssh_key}" > $ssh_config
+     echo "IdentityFile ${ssh_key}" > $ssh_dir/config
   fi
 
   # setup known hosts
