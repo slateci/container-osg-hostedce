@@ -5,6 +5,7 @@ RUN yum install -y osg-ce-bosco \
                    git \
                    openssh-clients \
                    certbot && \
+    yum clean all && \
     rm -rf /var/cache/yum/
 
 COPY 25-hosted-ce-setup.sh /etc/osg/image-config.d/
