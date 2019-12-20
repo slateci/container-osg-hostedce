@@ -26,14 +26,10 @@ setup_ssh_config () {
       echo $REMOTE_HOST_KEY >>  $known_hosts
   done
 
-  # add host SSH config
+  # add SSH config
   ssh_config=$ssh_dir/config
-  if ! grep -q "^Host ${rhost}$" $ssh_config; then
-      cat <<EOF >> $ssh_config
-Host ${rhost}
-IdentityFile ${ssh_key}
-
-EOF
+  if [ -f $ssh_config ]; then
+      echo "IdentityFile ${ssh_key}" > $ssh_config
   fi
 }
 
