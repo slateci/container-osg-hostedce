@@ -31,7 +31,10 @@ setup_ssh_config () {
 foreach_bosco_endpoint setup_ssh_config
 
 # Set the appropriate SSH key for bosco_cluster commands
-echo "IdentityFile ${BOSCO_KEY}" > /root/.ssh/config
+root_ssh_dir=/root/.ssh/
+mkdir -p $root_ssh_dir
+chown 700 $root_ssh_dir
+echo "IdentityFile ${BOSCO_KEY}" > $root_ssh_dir/.ssh/config
 
 # Install the WN client, CAs, and CRLs on the remote host
 # Store logs in /var/log/condor-ce/ to simplify serving logs via Kubernetes
