@@ -18,6 +18,7 @@ setup_ssh_config () {
      cp $BOSCO_KEY $ssh_key
      chmod 600 $ssh_key
      chown "${ruser}": $ssh_key
+     echo "IdentityFile ${ssh_key}" > $ssh_config
   fi
 
   # setup known hosts
@@ -25,12 +26,6 @@ setup_ssh_config () {
   for known_hosts in $ssh_dir/known_hosts /root/.ssh/known_hosts; do
       echo $REMOTE_HOST_KEY >>  $known_hosts
   done
-
-  # add SSH config
-  ssh_config=$ssh_dir/config
-  if [ ! -f $ssh_config ]; then
-      echo "IdentityFile ${ssh_key}" > $ssh_config
-  fi
 }
 
 foreach_bosco_endpoint setup_ssh_config
