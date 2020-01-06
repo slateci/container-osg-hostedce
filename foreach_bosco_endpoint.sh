@@ -4,6 +4,7 @@
 
 # for each bosco endpoint, call cmdline "$@" with batch, ruser, rhost set
 foreach_bosco_endpoint () {
+  # GridResource format: batch condor osguser@condor.grid.uchicago.edu
   local rx='^batch ([a-zA-Z0-9_]+) ([^ @]+)@([^ ]+)$'
   local ret=0
   condor_ce_job_router_info -config |
