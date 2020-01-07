@@ -15,7 +15,7 @@ function errexit {
     exit 1
 }
 
-[[ $@ -ne 2 ]] || errexit "Usage: bosco-override-setup.sh <GIT ENDPOINT> <RESOURCE NAME>"
+[[ $# -eq 2 ]] || errexit "Usage: bosco-override-setup.sh <GIT ENDPOINT> <RESOURCE NAME>"
 
 GIT_ENDPOINT=$1
 RESOURCE_NAME=$2
