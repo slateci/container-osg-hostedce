@@ -25,6 +25,8 @@ OVERRIDE_DIR=/etc/condor-ce/bosco_override/
 
 git clone --depth=1 $GIT_ENDPOINT $REPO_DIR
 
+# Bosco override dirs are expected in the following location in the git repo:
+#   <RESOURCE NAME>/bosco_override/
 RESOURCE_DIR="$REPO_DIR/$RESOURCE_NAME/"
 [[ -d $RESOURCE_DIR ]] || errexit "Could not find $RESOURCE_NAME/ under $GIT_ENDPOINT"
-rsync -az "$REPO_DIR/$RESOURCE_NAME"  $OVERRIDE_DIR
+rsync -az "$RESOURCE_DIR/bosco_override/"  $OVERRIDE_DIR
