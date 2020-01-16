@@ -15,8 +15,6 @@ COPY 25-hosted-ce-setup.sh /etc/osg/image-config.d/
 COPY 30-remote-site-setup.sh /etc/osg/image-config.d/
 
 COPY 99-container.conf /usr/share/condor-ce/config.d/
-# can be dropped when provided by upstream osg-ce packaging
-COPY 51-gratia.conf /usr/share/condor-ce/config.d/51-gratia.conf
 
 # can be dropped when provided by upstream htcondor-ce packaging
 RUN mkdir -p /etc/condor-ce/bosco_override
