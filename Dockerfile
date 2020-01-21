@@ -16,6 +16,10 @@ COPY 30-remote-site-setup.sh /etc/osg/image-config.d/
 
 COPY 99-container.conf /usr/share/condor-ce/config.d/
 
+# TODO: Drop this after implementing non-root Gratia probes
+# https://opensciencegrid.atlassian.net/browse/SOFTWARE-3975
+RUN chmod 777 /var/lib/gratia/tmp
+
 # can be dropped when provided by upstream htcondor-ce packaging
 RUN mkdir -p /etc/condor-ce/bosco_override
 
