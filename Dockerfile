@@ -29,6 +29,7 @@ COPY foreach_bosco_endpoint.sh     /usr/local/bin/foreach_bosco_endpoint.sh
 
 # do the bad thing of overwriting the existing cron job for fetch-crl
 ADD fetch-crl /etc/cron.d/fetch-crl
+RUN chmod 644 /etc/cron.d/fetch-crl
 
 # Include script to drain the CE and upload accounting data to prepare for container teardown
 COPY drain-ce.sh /usr/local/bin/
