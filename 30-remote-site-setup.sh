@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BOSCO_KEY=/etc/osg/bosco.key
+# $REMOTE_HOST needs to be specified in the environment
 REMOTE_HOST_KEY=`ssh-keyscan -H "$REMOTE_HOST"`
 ENDPOINT_CONFIG=/etc/endpoints.ini
 OVERRIDE_DIR=/etc/condor-ce/bosco_override
@@ -63,6 +64,7 @@ users=$(cat /etc/grid-security/grid-mapfile /etc/grid-security/voms-mapfile | \
 for ruser in $users; do
     setup_ssh_config
     setup_endpoints_ini
+    # $REMOTE_BATCH needs to be specified in the environment
     bosco_cluster -o "$OVERRIDE_DIR" -a "${ruser}@$REMOTE_HOST" "$REMOTE_BATCH"
 done
 
