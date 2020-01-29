@@ -17,6 +17,16 @@ pushd /etc/osg/config.d
   fi
 popd 
 
+# Allow the condor user to run the WN client updater as the local users
+users=$(cat /etc/grid-security/grid-mapfile /etc/grid-security/voms-mapfile | \
+            awk '/^"[^"]+" +[a-zA-Z0-9]+$/ {print $NF}' | \
+            sort -u | \
+            tr '\n' ' ')
+[[ -n $users ]] || { echo >&2 "No users found in /etc/grid-security/grid-mapfile or /etc/grid-security/voms-mapfile"; exit 1; }
+# Use param expansion to remove the trailing space
+echo "condor ALL = (${users%%[[:space:]}) NOPASSWD: /usr/bin/update-remote-wn-client" \
+      > /etc/sudoers.d/10-condor-ssh
+
 echo "Running OSG configure.."
 # Run the OSG Configure script to set up bosco
 osg-configure -c
