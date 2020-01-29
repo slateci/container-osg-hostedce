@@ -39,13 +39,17 @@ EOF
 setup_endpoints_ini () {
     remote_home_dir=$(ssh -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" pwd)
     remote_os_ver=$(ssh -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" "rpm -E %rhel")
+    osg_ver=3.4
+    if [[ $remote_os_ver -gt 6 ]]; then
+        osg_ver=3.5
+    fi
     cat <<EOF >> $ENDPOINT_CONFIG
 [Endpoint ${RESOURCE_NAME}-${ruser}]
 local_user = ${ruser}
 remote_host = $REMOTE_HOST
 remote_user = ${ruser}
 remote_dir = $remote_home_dir/bosco-osg-wn-client
-upstream_url = https://repo.opensciencegrid.org/tarball-install/3.4/osg-wn-client-latest.el${remote_os_ver}.x86_64.tar.gz
+upstream_url = https://repo.opensciencegrid.org/tarball-install/${osg_ver}/osg-wn-client-latest.el${remote_os_ver}.x86_64.tar.gz
 ssh_key = ${BOSCO_KEY}
 EOF
 }
