@@ -20,7 +20,7 @@ setup_ssh_config () {
   cp $BOSCO_KEY $ssh_key
   chmod 600 $ssh_key
   chown "${ruser}": $ssh_key
-  cat <<EOF echo "" > $ssh_dir/config
+  cat <<EOF > $ssh_dir/config
 PreferredAuthentications publickey
 IdentitiesOnly yes
 IdentityFile ${ssh_key}
