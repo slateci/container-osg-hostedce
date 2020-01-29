@@ -24,6 +24,10 @@ setup_ssh_config () {
 
   # setup known hosts
   echo $REMOTE_HOST_KEY >> $ssh_dir/known_hosts
+
+  for ssh_file in $ssh_dir/config $ssh_dir/known_hosts; do
+      chown "${ruser}": $ssh_file
+  done
 }
 
 # Install the WN client, CAs, and CRLs on the remote host
