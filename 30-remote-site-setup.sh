@@ -20,7 +20,11 @@ setup_ssh_config () {
   cp $BOSCO_KEY $ssh_key
   chmod 600 $ssh_key
   chown "${ruser}": $ssh_key
-  echo "IdentityFile ${ssh_key}" > $ssh_dir/config
+  cat <<EOF echo "" > $ssh_dir/config
+PreferredAuthentications publickey
+IdentitiesOnly yes
+IdentityFile ${ssh_key}
+EOF
 
   # setup known hosts
   echo $REMOTE_HOST_KEY >> $ssh_dir/known_hosts
