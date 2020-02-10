@@ -69,7 +69,7 @@ GIT_SSH_KEY=/etc/osg/git.key
 unset GIT_SSH_COMMAND
 
 users=$(cat /etc/grid-security/grid-mapfile /etc/grid-security/voms-mapfile | \
-            awk '/^"[^"]+" +[a-zA-Z0-9\-]+$/ {print $NF}' | \
+            awk '/^"[^"]+" +[a-zA-Z0-9\-\._]+$/ {print $NF}' | \
             sort -u)
 [[ -n $users ]] || exit 1
 
