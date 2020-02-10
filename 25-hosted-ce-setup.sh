@@ -19,7 +19,7 @@ popd
 
 # Allow the condor user to run the WN client updater as the local users
 users=$(cat /etc/grid-security/grid-mapfile /etc/grid-security/voms-mapfile | \
-            awk '/^"[^"]+" +[a-zA-Z0-9]+$/ {print $NF}' | \
+            awk '/^"[^"]+" +[a-zA-Z0-9\-]+$/ {print $NF}' | \
             sort -u | \
             tr '\n' ' ')
 [[ -n $users ]] || { echo >&2 "No users found in /etc/grid-security/grid-mapfile or /etc/grid-security/voms-mapfile"; exit 1; }
