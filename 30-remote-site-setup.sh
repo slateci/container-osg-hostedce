@@ -81,3 +81,4 @@ for ruser in $users; do
 done
 
 update-all-remote-wn-clients --log-dir /var/log/condor-ce/
+chown condor:condor "/var/log/condor-ce/${RESOURCE_NAME}*"
