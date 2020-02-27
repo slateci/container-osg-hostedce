@@ -80,5 +80,4 @@ for ruser in $users; do
     bosco_cluster -o "$OVERRIDE_DIR" -a "${ruser}@$REMOTE_HOST" "$REMOTE_BATCH"
 done
 
-update-all-remote-wn-clients --log-dir /var/log/condor-ce/
-chown condor:condor "/var/log/condor-ce/${RESOURCE_NAME}*"
+sudo -u condor update-all-remote-wn-clients --log-dir /var/log/condor-ce/
