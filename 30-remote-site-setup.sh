@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 BOSCO_KEY=/etc/osg/bosco.key
 # $REMOTE_HOST needs to be specified in the environment
