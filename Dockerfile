@@ -31,6 +31,9 @@ RUN chmod 644 /etc/cron.d/fetch-crl
 # Include script to drain the CE and upload accounting data to prepare for container teardown
 COPY drain-ce.sh /usr/local/bin/
 
+# Use "ssh -q" in bosco_cluster
+COPY bosco_cluster /usr/bin
+
 # Set up Bosco override dir from Git repo (SOFTWARE-3903)
 # Expects a Git repo with the following directory structure:
 #     RESOURCE_NAME_1/
