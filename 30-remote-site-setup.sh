@@ -32,6 +32,9 @@ EOF
   for ssh_file in $ssh_dir/config $ssh_dir/known_hosts; do
       chown "${ruser}": $ssh_file
   done
+
+  # debugging
+  ls -l "$ssh_dir"
 }
 
 # Install the WN client, CAs, and CRLs on the remote host
