@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 BOSCO_KEY=/etc/osg/bosco.key
 # $REMOTE_HOST needs to be specified in the environment
@@ -40,8 +40,8 @@ EOF
 # Install the WN client, CAs, and CRLs on the remote host
 # Store logs in /var/log/condor-ce/ to simplify serving logs via Kubernetes
 setup_endpoints_ini () {
-    remote_home_dir=$(ssh -q -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" pwd)
-    remote_os_ver=$(ssh -q -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" "rpm -E %rhel")
+    remote_home_dir=$(ssh -vvvv -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" pwd)
+    remote_os_ver=$(ssh -vvvv -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" "rpm -E %rhel")
     osg_ver=3.4
     if [[ $remote_os_ver -gt 6 ]]; then
         osg_ver=3.5
@@ -53,7 +53,6 @@ remote_host = $REMOTE_HOST
 remote_user = ${ruser}
 remote_dir = $remote_home_dir/bosco-osg-wn-client
 upstream_url = https://repo.opensciencegrid.org/tarball-install/${osg_ver}/osg-wn-client-latest.el${remote_os_ver}.x86_64.tar.gz
-ssh_key = ${BOSCO_KEY}
 EOF
 }
 
