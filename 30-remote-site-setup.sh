@@ -41,12 +41,11 @@ EOF
 # Install the WN client, CAs, and CRLs on the remote host
 # Store logs in /var/log/condor-ce/ to simplify serving logs via Kubernetes
 setup_endpoints_ini () {
-    remote_home_dir=$(ssh -vvvv -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" pwd)
-    remote_os_ver=$(ssh -vvvv -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" "rpm -E %rhel")
-    osg_ver=3.4
-    if [[ $remote_os_ver -gt 6 ]]; then
-        osg_ver=3.5
-    fi
+    echo "ssh -q -i $BOSCO_KEY \"${ruser}@$REMOTE_HOST\" pwd"
+    remote_home_dir=$(ssh -q -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" pwd)
+    echo "ssh -q -i $BOSCO_KEY \"${ruser}@$REMOTE_HOST\" \"rpm -E %rhel\")"
+    remote_os_ver=$(ssh -q -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" "rpm -E %rhel")
+    osg_ver=3.5
     cat <<EOF >> $ENDPOINT_CONFIG
 [Endpoint ${RESOURCE_NAME}-${ruser}]
 local_user = ${ruser}
