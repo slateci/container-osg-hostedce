@@ -4,4 +4,4 @@
 # systemctl start fetch-crl-cron
 # systemctl enable fetch-crl-cron
 
-45 */6 * * * root /usr/sbin/fetch-crl -q -r 360
+45 */6 * * * root /usr/sbin/fetch-crl -p 5 -r 360 > /var/log/condor-ce/fetch-crl 2>&1
