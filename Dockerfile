@@ -33,6 +33,8 @@ COPY drain-ce.sh /usr/local/bin/
 
 # Use "ssh -q" in bosco_cluster
 COPY bosco_cluster /usr/bin
+# likewise for updating remote clients
+COPY update-remote-wn-client /usr/bin
 
 # Set up Bosco override dir from Git repo (SOFTWARE-3903)
 # Expects a Git repo with the following directory structure:
