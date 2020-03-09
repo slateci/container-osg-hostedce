@@ -84,10 +84,11 @@ for ruser in $users; do
     setup_endpoints_ini
     # $REMOTE_BATCH needs to be specified in the environment
     bosco_cluster -o "$OVERRIDE_DIR" -a "${ruser}@$REMOTE_HOST" "$REMOTE_BATCH"
-    ls -l /home/$user/.ssh 
+    ls -l /home/$ruser/.ssh 
     cat /home/$ruser/.ssh/config
+    cat /home/$ruser/.ssh/bosco.key
     # validate that the ssh config works
-    su - $ruser -c "ssh ${ruser}@$REMOTE_HOST 'hostname'"
+    su - $ruser -c "ssh -vvv ${ruser}@$REMOTE_HOST 'hostname'"
 done
 
 sudo -u condor update-all-remote-wn-clients --log-dir /var/log/condor-ce/
