@@ -43,8 +43,9 @@ EOF
 setup_endpoints_ini () {
     echo "ssh -q -i $BOSCO_KEY \"${ruser}@$REMOTE_HOST\" pwd"
     remote_home_dir=$(ssh -q -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" pwd)
-    echo "ssh -q -i $BOSCO_KEY \"${ruser}@$REMOTE_HOST\" \"rpm -E %rhel\")"
+    echo "ssh -q -i $BOSCO_KEY \"${ruser}@$REMOTE_HOST\" \"rpm -E %rhel\""
     remote_os_ver=$(ssh -q -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" "rpm -E %rhel")
+    ssh -q -vvv -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" hostname
     osg_ver=3.5
     cat <<EOF >> $ENDPOINT_CONFIG
 [Endpoint ${RESOURCE_NAME}-${ruser}]
