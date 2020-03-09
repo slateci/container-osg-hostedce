@@ -47,7 +47,6 @@ setup_endpoints_ini () {
     remote_home_dir=$(ssh -q -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" pwd)
     echo "ssh -q -i $BOSCO_KEY \"${ruser}@$REMOTE_HOST\" \"rpm -E %rhel\""
     remote_os_ver=$(ssh -q -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" "rpm -E %rhel")
-    ssh -q -vvv -i $BOSCO_KEY "${ruser}@$REMOTE_HOST" hostname
     osg_ver=3.5
     cat <<EOF >> $ENDPOINT_CONFIG
 [Endpoint ${RESOURCE_NAME}-${ruser}]
@@ -85,6 +84,8 @@ for ruser in $users; do
     setup_endpoints_ini
     # $REMOTE_BATCH needs to be specified in the environment
     bosco_cluster -o "$OVERRIDE_DIR" -a "${ruser}@$REMOTE_HOST" "$REMOTE_BATCH"
+    ls -l /home/$user/.ssh 
+    cat /home/$ruser/.ssh/config
 done
 
 sudo -u condor update-all-remote-wn-clients --log-dir /var/log/condor-ce/
