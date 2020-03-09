@@ -22,7 +22,6 @@ setup_ssh_config () {
   chmod 600 $ssh_key
   chown "${ruser}": $ssh_key
   cat <<EOF > $ssh_dir/config
-PreferredAuthentications publickey
 IdentitiesOnly yes
 IdentityFile ${ssh_key}
 EOF
