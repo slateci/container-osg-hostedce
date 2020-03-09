@@ -26,7 +26,9 @@ PreferredAuthentications publickey
 IdentitiesOnly yes
 IdentityFile ${ssh_key}
 EOF
-
+  chmod 400 $ssh_dir/config
+  chmod 600 $ssh_dir/known_hosts
+  
   # setup known hosts
   echo $REMOTE_HOST_KEY >> $ssh_dir/known_hosts
 
@@ -63,6 +65,8 @@ mkdir -p $root_ssh_dir
 chmod 700 $root_ssh_dir
 echo "IdentityFile ${BOSCO_KEY}" > $root_ssh_dir/config
 echo $REMOTE_HOST_KEY >> $root_ssh_dir/known_hosts
+chmod 400 $root_ssh_dir/config
+ls -l "$root_ssh_dir"
 
 # Populate the bosco override dir from a Git repo
 GIT_SSH_KEY=/etc/osg/git.key
