@@ -5,6 +5,7 @@
 # as function exit code (by return) and this is modulo 256
 # see cluster_list_iterator, list
 
+export HOME="/root"
 alias ssh='ssh -q'
 
 # Bosco key location
