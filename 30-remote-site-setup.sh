@@ -86,6 +86,9 @@ for ruser in $users; do
     bosco_cluster -o "$OVERRIDE_DIR" -a "${ruser}@$REMOTE_HOST" "$REMOTE_BATCH"
     ls -l /home/$user/.ssh 
     cat /home/$ruser/.ssh/config
+    # validate that the ssh config works
+    su - $ruser -c "ssh ${ruser}@$REMOTE_HOST 'hostname'"
 done
 
 sudo -u condor update-all-remote-wn-clients --log-dir /var/log/condor-ce/
+
